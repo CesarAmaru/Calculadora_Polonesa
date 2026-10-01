@@ -56,6 +56,7 @@ public class Calculadora {
                 
             case "tg" -> Math.tan(Math.toRadians(a));
             case "cos" -> Math.cos(Math.toRadians(a));
+            case "sen" -> Math.sin(Math.toRadians(a));
             default -> throw new InvalidParameterException("Operador não encontrado");
         };
     }
