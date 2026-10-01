@@ -46,7 +46,7 @@ public class Calculadora {
         return switch(temp){
             case "log" -> {
                 if(a<=0) throw new ArithmeticException("Log deve um valor menor ou igual a 0");
-                yield Math.log(a);
+                yield Math.log10(a);
             }
                 
             case "raiz" -> { 
