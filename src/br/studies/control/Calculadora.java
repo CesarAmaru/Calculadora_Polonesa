@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 
 public class Calculadora {
     
-    
     public Calculadora(){}
     
     private boolean isOperador(String op){
@@ -97,18 +96,50 @@ public class Calculadora {
         }
     }
     
-    public String toInfixa(String expressao){
+    public String toInfixa(String expressao) {
         String[] aux = expressao.split(" ");
-        Deque<String> resultado = new ArrayDeque<>();
-        for(String temp : aux){
-            if(isOperador(temp)){
-              String b = resultado.pop();
-              String a = resultado.pop();
-              resultado.push(String.format("(%s %s %s)", a, temp, b));
-            }else{
-                resultado.push(temp);
+        Deque<Precedencia> pilha = new ArrayDeque<>();
+        try {
+            for (String temp : aux) {
+                if (isOperador(temp)) {
+                    if (pilha.size() < 2) {
+                        throw new IllegalArgumentException("Operadores em excesso");
+                    }
+                    Precedencia b = pilha.pop();
+                    Precedencia a = pilha.pop();
+                    Integer tempPrecedencia = Precedencia.getPrecedencia(temp);
+
+                    String textoA = (a.precedencia < tempPrecedencia)
+                            ? "(" + a.caractere + ")"
+                            : a.caractere;
+
+                    boolean embrulharB = (b.precedencia < tempPrecedencia)
+                            || (b.precedencia == tempPrecedencia
+                            && (temp.equals("-") || temp.equals("/")
+                            || temp.equals("^")));
+
+                    String textoB = embrulharB ? "(" + b.caractere + ")" : b.caractere;
+                    String texto = String.format("%s %s %s", textoA, temp, textoB);
+                    pilha.push(new Precedencia(texto, tempPrecedencia));
+
+                } else if (isOperadorUnario(temp)) {
+                    if (pilha.isEmpty()) {
+                        throw new IllegalArgumentException("Números em excesso");
+                    }
+                    Precedencia a = pilha.pop();
+                    String texto = String.format("%s(%s)", temp, a.caractere);
+                    pilha.push(new Precedencia(texto, Precedencia.getPrecedencia(temp)));
+                } else {
+                    pilha.push(new Precedencia(temp, 5));
+                }
             }
+            if (pilha.size() != 1) {
+                throw new IllegalArgumentException("Números em excesso");
+            }
+            return pilha.pop().caractere;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro:" + e.getMessage());
+            return null;
         }
-        return resultado.pop();
     }
 }
