@@ -29,11 +29,11 @@ ant -version
 * Na pasta raiz do projeto execute o comando:
 ```bash
 mkdir bin
-javac -d bin src/**/*.java
+dir /s /b src\*.java > sources.txt && javac -d bin @sources.txt && del sources.txt
 ```
-* Gerar o arquivo .jar com o seu manifest.mf
+* Gerar o arquivo .jar com manifest.mf
 ```bash
-jar cvfm MeuProjeto.jar manifest.mf -C bin/ .
+jar cvfm Calculadora_Polonesa.jar manifest.mf -C bin .
 ```
 * Executar arquivo:
 ```bash
