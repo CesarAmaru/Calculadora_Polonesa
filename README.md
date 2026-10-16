@@ -3,8 +3,8 @@
 
 Este projeto tem como foco resolver expressões matemáticas em notação polonesa reversa (notação pós-fixa) e converter as expressões de pós-fixa para infixa.
 
-* Operações básicas suportadas:* adição(+), subtração(-), multiplicação(*), divisão(/) e potenciação(^);
-* Além de:* raiz-quadrada(raiz), log(log), cosseno(cos), seno(sen) e tangente(tg);
+* **Operações básicas suportadas:** adição(+), subtração(-), multiplicação(*), divisão(/) e potenciação(^);
+* **Além de:** raiz-quadrada(raiz), log(log), cosseno(cos), seno(sen) e tangente(tg);
 
 ## Compilar o projeto:
 ### Pré-requisitos:
